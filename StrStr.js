@@ -1,13 +1,13 @@
-const str1 = "abcdefghijklmnop";
-const str2 = "delfgh";
+const str1 = "abcdefghijklmnopdefighabcdefghijklmnopdefikjkabcdefghijklmnopdefighdjfkdfabcdefghijklmnopdefidgabcdefghijklmnopdefidfabcdefghijklmnopdefikjkabcdefghijdflmnopdefighdjfkdfabcdefghijklmnopdefighkdfjkdjfabcdefghijklmnopdefighabcdefghijklmnopdefikjkabcddffghijklmnopdefighdjfkdfabcdefghijklmnopdefighjfdkfdfjkabcdefghijklmnopdefigdabcdefghijklmnopdefikjkabcdefghijklmnopdefighdjfkdfabcdedfghijklmnopdefighabcdefghijklmnopdefighabcdefghijklmnopdefikjkabcdefghijklmnopdefighdjfkdfabcdefghijklmnopdefigh";
+const str2 = "abcdefghijklmnopdefighabcdefghijklmnopdefikjkabcdefghijklmnopdefighdjfkdfabcdefghijklmnopdefigh";
 
 const isSubstring = (str1, str2) => {
     str1 = str1.toLowerCase();
     str2 = str2.toLowerCase();
     const length1 = str1.length, length2 = str2.length;
     
-    const base = 26;  // Base for the hash function (26 letters in the alphabet)
-    const mod = 1e9 + 7;  // A large prime number to prevent overflow
+    const base = 26;  // Base for the hash function (since there are 26 letters in the alphabet)
+    const mod = 1e9 + 7;  // A large prime number to avoid overflow and minimize collisions
     
     let str2Hash = 0, str1Hash = 0, basePower = 1;
     
@@ -16,7 +16,7 @@ const isSubstring = (str1, str2) => {
         str2Hash = (str2Hash * base + (str2[i].charCodeAt() - 96)) % mod;
         str1Hash = (str1Hash * base + (str1[i].charCodeAt() - 96)) % mod;
         if (i > 0) {
-            basePower = (basePower * base) % mod;  // Precompute base^m % mod for sliding window
+            basePower = (basePower * base) % mod;
         }
     }
 
@@ -28,7 +28,7 @@ const isSubstring = (str1, str2) => {
     // Slide the window over str1 and update the hash
     for (let i = length2; i < length1; i++) {
         // Remove the leftmost character and add the new rightmost character
-        str1Hash = (str1Hash - (str1[i - length2].charCodeAt() - 96) * basePower % mod + mod) % mod;
+        str1Hash = (str1Hash - (str1[i - length2].charCodeAt() - 96) * basePower % mod +mod) % mod;
         str1Hash = (str1Hash * base + (str1[i].charCodeAt() - 96)) % mod;
 
         // Check if hashes match, and verify substring to avoid hash collisions
@@ -37,7 +37,6 @@ const isSubstring = (str1, str2) => {
         }
     }
 
-    console.log(str1Hash,str2Hash);
     return false;
 };
 
