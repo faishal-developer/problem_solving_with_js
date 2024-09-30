@@ -42,34 +42,76 @@ class LinkedLists{
     }
 
     reverseMtoN(m,n){
-        let current=this.head,index=0,first=null,last=null;
+        let current=this.head,index=0,first=null, prevFirst=null;
         let prev=null;
         while (current!==null) {
             const next=current.next;
             if(index===m-1){
+                prevFirst=current;
+            }if(index===m){
                 first=current;
             }
-            if(index>=m && index<=n){
-                
+            if(index>m && index<n){
                 current.next=prev
                 if(index===n){
                     last=current;
                     first.next=last;
                 }
             }
+            if(index===n){
+                
+                first.next=current.next;
+                if(!prevFirst){
+                    this.head=current
+                    console.log(prev.value,"---",current.value)
+                }
+                else {
+                    prevFirst.next=current;
+                }
+                current.next=prev;
+            }
             prev=current;
             current=next;
 
-
-            if(m===0 && n===this.length-1 && current?.next===null){
-                this.head=current;
-            }
             index++;
         }
     }
 
     getLength(){
         return this.length;
+    }
+
+    removeDuplicatesFNSE(){
+        let hashMap={};
+        let current1=this.head;
+        while (current1!==null) {
+            hashMap[current1.value]=hashMap[current1.value] ? hashMap[current1.value]+1 :1;
+            current1=current1.next;
+        }
+        let current=this.head;
+        let prevNode=null;
+
+        while (current!=null) {
+            if(hashMap[current.value]>=2){
+                if(prevNode===null){
+                    this.head=current.next
+                    current=this.head;
+                }else{
+                    prevNode.next =current?.next ?? null;
+                    current=current.next;
+                }
+                
+            }else{
+                prevNode=current
+                current=current.next;
+            }
+            
+            if(!current){
+                break;
+            }
+            // console.log(current.value);
+            
+        }
     }
 
     removeDuplicates(){
@@ -110,20 +152,22 @@ class LinkedLists{
             }
         }
     }
+
+    // removeMiddleNode
 }
 
 const list= new LinkedLists();
 list.addvalue(10);
 
-list.addvalue(9);
-list.addvalue(9);
-list.addvalue(9);
-list.addvalue(9);
+list.addvalue(6);
+list.addvalue(5);
+list.addvalue(4);
+list.addvalue(3);
 list.addvalue(2);
-list.addvalue(9);
+list.addvalue(1);
 
 list.traverse();
-list.removeDuplicates(1,3);
+list.reverseMtoN(3,6);
 console.log("next version of list");
 list.traverse();
 
