@@ -20,7 +20,7 @@ class LinkedLists{
     traverse(){
         let current=this.head;
         while (current!==null) {
-            console.log(current.value);
+            console.log(current?.value);
             current=current.next;
         }
     }
@@ -153,7 +153,41 @@ class LinkedLists{
         }
     }
 
-    // removeMiddleNode
+    removeMiddleNode(){
+        let faster=this.head;
+        let current=this.head;
+        if(faster.next===null){
+            this.head=null;
+            return
+        }
+
+        while (current!==null) {
+            faster=faster.next;
+            if(faster?.next===null){
+                console.log('working')
+                current.next=current.next?.next;
+                break;
+            }
+            faster=faster.next;
+            if(faster?.next===null){
+                console.log('working',current.value)
+                current.next=current.next?.next;
+                break;
+            }
+            
+            current=current.next;
+        }
+    }
+
+    isPalindrome(){
+        reverseMtoN(0,this.length/2)
+        for (let i = 0; i < length; i++) {
+            if(stack[i]!==stack[length-1-i]){
+                return false
+            }
+        }
+        return true;
+    }
 }
 
 const list= new LinkedLists();
@@ -163,11 +197,12 @@ list.addvalue(6);
 list.addvalue(5);
 list.addvalue(4);
 list.addvalue(3);
-list.addvalue(2);
-list.addvalue(1);
+list.addvalue(6);
+list.addvalue(10);
 
 list.traverse();
-list.reverseMtoN(3,6);
+// list.reverseMtoN(3,6);
+console.log(list.isPalindrome())
 console.log("next version of list");
 list.traverse();
 
