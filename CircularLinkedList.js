@@ -53,6 +53,28 @@ class LinkedLists{
             }
         }
     }
+
+    cycleDetection(){
+        let hare=this.head,tortoise=this.head,i=0;
+
+        while (hare!==null) {
+            hare=hare.next;
+            hare=hare.next;
+            tortoise=tortoise.next;
+            if(hare===tortoise){
+                hare=this.head;
+                while(tortoise!==null){
+                    hare=hare.next;
+                    tortoise=tortoise.next;
+                    if(hare===tortoise){
+                        return i;
+                    }
+                    i++;
+                }
+            }
+        }
+        return false
+    }
 }
 
 const list= new LinkedLists();
@@ -62,9 +84,10 @@ list.addvalue(8);
 list.addvalue(7);
 list.addvalue(6);
 list.addvalue(1);
-list.traverse();
-list.removeNode(2);
+// list.traverse();
+// list.removeNode(2);
+console.log(list.cycleDetection())
 console.log("next version of list");
-list.traverse();
+// list.traverse();
 
 console.log("length",list.getLength());
